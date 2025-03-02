@@ -19,7 +19,8 @@ import { ConfigModule } from '@nestjs/config';
     entities: [],
     autoLoadEntities: true,
     synchronize: true,
-  }), EmployeesModule, ProductsModule],
+  }), 
+  EmployeesModule, ProductsModule],
   controllers: [AppController],
   providers: [AppService],
 })
