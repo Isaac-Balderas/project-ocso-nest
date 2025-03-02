@@ -9,9 +9,7 @@ export class Product {
     @Column({type: "float"})
     price: number;
     @Column({type: "int"})
-    countSeal: number;
-    // @Column({type: "uuid"})
-    // provider: string;    
+    countSeal: number; 
     @ManyToOne(() => Provider, (provider) => provider.products)
     provider: Provider
 }

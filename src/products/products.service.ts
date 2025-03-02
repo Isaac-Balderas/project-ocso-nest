@@ -4,7 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { v4 as uuid } from 'uuid'; 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
@@ -30,7 +30,11 @@ export class ProductsService {
   }
 
   findByProvider(id: string){
-    return "OK"
+    return this.productRepository.findBy({
+      provider: {
+        providerId: id,
+      }
+    })
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
