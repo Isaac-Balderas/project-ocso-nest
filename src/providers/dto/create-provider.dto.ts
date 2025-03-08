@@ -1,5 +1,4 @@
 import { IsEmail, IsString, MaxLength } from "class-validator";
-import { Provider } from "../entities/provider.entity";
 import { Product } from "src/products/entities/product.entity";
 
 export class CreateProviderDto extends Product {
