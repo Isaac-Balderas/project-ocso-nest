@@ -29,7 +29,7 @@ export class RegionsService {
 
   async update(id: number, updateRegionDto: UpdateRegionDto) {
     const regionToUpdate = await this.regionRepository.preload({
-      regionId: id;
+      regionId: id,
       ...updateRegionDto
     })
     if(!regionToUpdate) throw new BadRequestException()

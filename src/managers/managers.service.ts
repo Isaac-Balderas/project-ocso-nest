@@ -28,7 +28,7 @@ export class ManagersService {
 
   async update(id: string, updateManagerDto: UpdateManagerDto) {
     const managerToUpdate = await this.managerRepository.preload({
-      managerId: id;
+      managerId: id,
       ...updateManagerDto
     })
     if(!managerToUpdate) throw new BadRequestException()
