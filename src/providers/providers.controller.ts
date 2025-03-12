@@ -5,7 +5,10 @@ import { UpdateProviderDto } from './dto/update-provider.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guards';
 import { UserData } from 'src/auth/decorators/user.decorator';
 import { User } from 'src/auth/entities/user.entity';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/role.guards';
 
+@UseGuards(AuthGuard)
 @Controller('providers')
 export class ProvidersController {
   constructor(private readonly providersService: ProvidersService) {}
@@ -15,7 +18,8 @@ export class ProvidersController {
     return this.providersService.create(createProviderDto);
   }
 
-
+  @UseGuards(RolesGuard)
+  @Roles(["Admin"])
   @Get()
   findAll(@UserData() user: User) {
     if (user.userRoles.includes("Employee")) throw new UnauthorizedException("You are not authorized,  only admins and managers");
