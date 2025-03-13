@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import * as bcrypt from "bcrypt";
 import { JwtService } from '@nestjs/jwt';
 import { loginUserDto } from './dto/login-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
   @Injectable()
   export class AuthService {
     constructor(@InjectRepository(User) private userRepository: Repository<User>,
@@ -19,7 +20,7 @@ import { loginUserDto } from './dto/login-user.dto';
       const user = await this.userRepository.findOne({
         where: { userEmail: loginUserDto.userEmail }
       });
-      // Verificar que user existe
+      // Verify that user exist
       if (!user) {
         throw new UnauthorizedException("User not found");
       }
@@ -35,5 +36,14 @@ import { loginUserDto } from './dto/login-user.dto';
       };
       const token = this.jwtService.sign(payload);
       return token
+  }
+
+  async updateUser(userEmail: string, updateUserDto: UpdateUserDto){
+    const newUserData = await this.userRepository.preload({
+      userEmail,
+      ...updateUserDto
+    })
+    this.userRepository.save(newUserData)
+    return newUserData
   }
 }
